@@ -78,12 +78,12 @@ viewValidation : Model -> Html msg
 viewValidation model =
   let
     (color, message) =
-      if model.password == model.passwordAgain then
+      -- Fix these functions
+      if model.password == model.passwordAgain && String.length model.password > 8 && any Char.isDigit model.password && any Char.isUpper model.password && any Char.isLower model.password then
         ("green", "OK")
-      else if String.length model.password > 8 then 
-        ("green", "Password not long enough")
-      --else if model.age then 
-      --  ("green", "Age is an integer")
+      else if Char.isDigit model.age then 
+        ("green", "OK")
+      -- Add submit button
       else
         ("red", "Passwords do not match!")
   in
