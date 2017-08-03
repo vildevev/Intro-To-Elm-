@@ -1,6 +1,7 @@
+import Char
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onInput)
+import Html.Events as E exposing (onInput, onClick)
 
 
 main =
@@ -17,6 +18,7 @@ main =
 
 type alias Model =
   { name : String
+  , age : String
   , password : String
   , passwordAgain : String
   }
@@ -24,7 +26,7 @@ type alias Model =
 
 model : Model
 model =
-  Model "" "" ""
+  Model "" "" "" ""
 
 
 
@@ -33,6 +35,7 @@ model =
 
 type Msg
     = Name String
+    | Age String
     | Password String
     | PasswordAgain String
 
@@ -43,11 +46,17 @@ update msg model =
     Name name ->
       { model | name = name }
 
+    Age age -> 
+      { model | age = age }
+
     Password password ->
       { model | password = password }
 
     PasswordAgain password ->
       { model | passwordAgain = password }
+
+       
+
 
 
 
@@ -58,6 +67,7 @@ view : Model -> Html Msg
 view model =
   div []
     [ input [ type_ "text", placeholder "Name", onInput Name ] []
+    , input [ type_ "age", placeholder "Age", onInput Age] []
     , input [ type_ "password", placeholder "Password", onInput Password ] []
     , input [ type_ "password", placeholder "Re-enter Password", onInput PasswordAgain ] []
     , viewValidation model
@@ -70,6 +80,10 @@ viewValidation model =
     (color, message) =
       if model.password == model.passwordAgain then
         ("green", "OK")
+      else if String.length model.password > 8 then 
+        ("green", "Password not long enough")
+      --else if model.age then 
+      --  ("green", "Age is an integer")
       else
         ("red", "Passwords do not match!")
   in
