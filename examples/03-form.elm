@@ -2,7 +2,7 @@ import Char
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events as E exposing (onInput, onClick)
-
+import String exposing (any)
 
 main =
   Html.beginnerProgram
@@ -78,10 +78,9 @@ viewValidation : Model -> Html msg
 viewValidation model =
   let
     (color, message) =
-      -- Fix these functions
       if model.password == model.passwordAgain && String.length model.password > 8 && any Char.isDigit model.password && any Char.isUpper model.password && any Char.isLower model.password then
         ("green", "OK")
-      else if Char.isDigit model.age then 
+      else if any Char.isDigit model.age then 
         ("green", "OK")
       -- Add submit button
       else
